@@ -3,7 +3,27 @@
   <head>
     <title>Collector</title>
     <meta charset = 'UTF-8'>
-    <link rel = 'stylesheet' type = 'text/css' href = 'style.css'></link> 
+    <style>
+      h3 { color: darkred; margin-left: 5%; } 
+      table, th, td { border: 1px solid grey; text-align:center; }
+      table { margin-left: 5%; } 
+      thead, tfoot { background-color: GainsBoro; }
+      #add { margin-left: 5%; }
+      #val { margin-top: 5px; margin-left: 5%; }
+      #add1 { width: 90px; }
+      .default { background: #fff; }
+      .invisible { display: none; }
+      .visible { display: inline; }
+      .notattend { background: #fff; color: #000; }
+      .attend { background: OliveDrab; color: #fff; }
+      .notpayed { background: IndianRed; color: #fff; }
+      .payed { background: GainsBoro; color #000; }
+      .button { width: 110px; }
+      .txt { color: Grey; margin-left: 5%; font-size: 11px; font-weight: normal; } 
+      .textBoxSmall { width: 30px; }
+      .black { color: black; }
+    </style>
+    
     <script src = 'checktable.js' type = 'text/javascript'></script>
     <script src = 'modify.js' type = 'text/javascript'></script>    
     <script src = 'empl.js' type = 'text/javascript'></script>
@@ -43,6 +63,207 @@
           <option>20</option>        
       </form>
     </div>
+  
+  <script>
+  
+// Setting array people who will attend (EDIT MANUALY)   
+    var temp = "First Person, Second Person, Third Person, Fourth Person, Fifth Person, Sixth Person, Seventh Person, Eight Person, Ninth Person, Tenth Person;
+var empl = new Array();
+empl = temp.split(',');
+
+// drawing table 
+var tableFun = function () {
+
+    var cellTitle = ['No.', 'Name Lastname', 'Attend', 'Payed', 'Debt'];
+      var body = document.getElementById('tabinfo');
+      var table = document.createElement('table');
+      table.id = "table";
+      var tableBody = document.createElement('tbody');
+      var tableFooter = document.createElement('tfoot');
+      var tableHeader = document.createElement('thead');
+         
+      //creating table header and footer
+        //header
+      for (var x = 0; x<cellTitle.length; x++) {
+        var tableRowH = document.createElement('td');
+        tableRowH.appendChild(document.createTextNode(cellTitle[x]));
+        tableHeader.appendChild(tableRowH);
+        var tableRowF = document.createElement('td');
+        
+        //footer
+        var footerDiv = document.createElement('DIV');
+        footerDiv.id = "Footer" + x + '';
+        footerDivText = document.createTextNode(cellTitle[x]);
+        footerDiv.appendChild(footerDivText);
+        tableRowF.appendChild(footerDiv);
+        tableFooter.appendChild(tableRowF);
+      }
+        
+      // creating table body
+      for (var y = 0; y < empl.length; y++) {
+        var row = document.createElement('tr');
+        
+        // Creates rows and a text nodes
+        var firstCell = document.createTextNode(y+1+'.');
+        var secondCell = document.createElement('DIV');
+          secondCell.id = "Person" + y + '';
+          secondCellText = document.createTextNode(empl[y]);
+          secondCell.appendChild(secondCellText);
+          
+        var thirdCell = document.createElement('INPUT'); 
+          thirdCell.setAttribute('type','checkbox'); 
+          thirdCell.id = "InputA" + y + '';
+          thirdCell.checked = false;
+          
+        var fourthCell = document.createElement('INPUT'); 
+          fourthCell.setAttribute('type','checkbox'); 
+          fourthCell.id = "InputB" + y +'';
+          fourthCell.checked = false;
+          
+        var fifthCell = document.createElement('DIV');
+          fifthCell.id = "Value" + y + '';
+          fifthCellText = document.createTextNode('');
+          fifthCell.appendChild(fifthCellText);
+  
+        //filling table with cells
+        for (var x2 = 0; x2 < cellTitle.length; x2++) {
+          var cell = document.createElement('td');    
+          var tContent = [firstCell, secondCell, thirdCell, fourthCell, fifthCell];    
+          cell.appendChild(tContent[x2]);
+          row.appendChild(cell);
+        }
+        //finishing table       
+        tableBody.appendChild(row);
+        table.appendChild(tableHeader);
+        table.appendChild(tableBody);
+        table.appendChild(tableFooter);
+        body.appendChild(table);
+      }
+            
+ }
+       document.addEventListener('change', valCheck, false);
+
+//function of checking value
+  function valCheck() {
+    var attend = 0;
+    var payed = 0;
+    var debt = 0;
+    var suma = document.getElementById('sel').value;
+            
+        for (var u = 0; u < empl.length; u++) {
+          var Id1 = "InputA" + u + '';
+          var Id2 = "InputB" + u + '';
+          var Input1 = document.getElementById(Id1);
+          var Input2 = document.getElementById(Id2);
+          var person = "Person" + u + '';
+                    
+          //change background and denied Input2 while Input1 is false 
+          if (!Input1.checked) {
+            Input2.checked = false;
+            document.getElementById(person).className = "notattend";
+          } else {
+            document.getElementById(person).className = "attend";
+          }
+          var value = "Value" + u + '';
+          var valEntry = document.getElementById(value);
+       
+          //checking debt value
+          if (Input1.checked!=Input2.checked) {
+            valEntry.innerHTML = 'Yes';
+            document.getElementById(person).className = "notpayed";
+          } else if (!Input1.checked&&!Input2.checked) { 
+            valEntry.innerHTML = '';
+          } else {                                                 
+            valEntry.innerHTML = 'No';
+          }
+          //filling footer entries and style
+          if (Input1.checked) {attend++;}
+          if (Input2.checked) {payed++;}
+          if (Input1!=Input2) {debt = attend - payed;}
+          
+          var footer2 = document.getElementById('Footer2');
+          var footer3 = document.getElementById('Footer3');
+          var footer4 = document.getElementById('Footer4');
+          
+          footer2.innerHTML = attend;
+          footer3.innerHTML = payed+' from '+attend;
+          footer4.innerHTML = debt*suma+ ' $'; 
+          if (attend!=payed) {
+            footer2.className = "notpayed";
+            footer3.className = "notpayed";
+            footer4.className = "notpayed";
+          } else {
+            footer2.className = "payed";
+            footer3.className = "payed";
+            footer4.className = "payed";
+          }
+        }
+  }
+
+//modyfying table 
+
+//toggle textbox and button for adding person 
+function addPerson() {
+  var add1 = document.getElementById('add1');
+  var remove1 = document.getElementById('remove1');
+  var adding = document.getElementById('adding');
+  var removing = document.getElementById('removing');
+  var txt = document.getElementById('txt');
+    
+  add1.value = '';
+  if (adding.className != 'visible') {
+    adding.className = 'visible';
+    txt.className = 'visible';
+    if (removing.className == 'visible') {
+      removing.className = 'invisible';
+    }
+  } else {
+    adding.className = 'invisible';
+    txt.className = 'invisible';
+  };
+};
+
+//toggle textbox and button for removing person 
+function remPerson(){  
+  if (removing.className != 'visible') {
+    remove1.value = '';
+    removing.className = 'visible';
+    txt.className = 'visible';
+    if  (adding.className == 'visible') {
+      adding.className = 'invisible';
+    }
+  } else {
+    removing.className = 'invisible';
+    txt.className = 'invisible';
+  };
+};
+
+//add person to array 'empl'
+function plusPerson() {
+  var plusVal = add1.value;
+  if (plusVal != '') {
+    empl.push(plusVal);
+    add1.value = '';
+    var elem = document.getElementById('table');
+    elem.parentNode.removeChild(elem);
+    tableFun();
+  }
+};
+//remove person from array 'empl'
+function minusPerson() {
+  var remoVal = remove1.value;
+  var minusVal = remoVal-1;
+  if (remoVal != '') {
+    empl.splice(minusVal,1);
+    remove1.value = '';
+    var elem = document.getElementById('table');
+    elem.parentNode.removeChild(elem);
+    tableFun();
+  }
+};
+  
+
+  </script>
     
   </body>
 </html>
