@@ -24,12 +24,12 @@
        
           //checking debt value
           if (Input1.checked!=Input2.checked) {
-            valEntry.innerHTML = 'Taip';
+            valEntry.innerHTML = 'Yes';
             document.getElementById(person).className = "notpayed";
           } else if (!Input1.checked&&!Input2.checked) { 
             valEntry.innerHTML = '';
           } else {                                                 
-            valEntry.innerHTML = 'Ne';
+            valEntry.innerHTML = 'No';
           }
           //filling footer entries and style
           if (Input1.checked) {attend++;}
@@ -41,8 +41,8 @@
           var footer4 = document.getElementById('Footer4');
           
           footer2.innerHTML = attend;
-          footer3.innerHTML = payed+' iš '+attend;
-          footer4.innerHTML = debt*suma+ ' Lt'; 
+          footer3.innerHTML = payed+' from '+attend;
+          footer4.innerHTML = debt*suma+ ' $'; 
           if (attend!=payed) {
             footer2.className = "notpayed";
             footer3.className = "notpayed";
