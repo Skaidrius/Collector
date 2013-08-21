@@ -248,7 +248,7 @@ function plusPerson() {
 function minusPerson() {
   var remoVal = remove1.value;
   var minusVal = remoVal-1;
-  if (remoVal != ''&!remoVal%1===0) {
+  if (remoVal != ''&&remoVal%1===0) {
     empl.splice(minusVal,1);
     remove1.value = '';
     var elem = document.getElementById('table');
