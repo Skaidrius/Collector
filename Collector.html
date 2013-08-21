@@ -61,7 +61,7 @@
   
   <script>
   
-// Setting array people who will attend (EDIT MANUALY)   
+// Setting array people (THIS LIST 'temp' SHOULD BE EDITED MANUALY)   
 var temp = "First Person, Second Person, Third Person, Fourth Person, Fifth Person, Sixth Person, Seventh Person, Eight Person, Ninth Person, Tenth Person";
 var empl = new Array();
 empl = temp.split(',');
@@ -181,7 +181,7 @@ var tableFun = function () {
           var footer4 = document.getElementById('Footer4');
           
           footer2.innerHTML = attend;
-          footer3.innerHTML = payed+' from '+attend;
+          footer3.innerHTML = payed+' / '+attend;
           footer4.innerHTML = debt*suma+ ' $'; 
           if (attend!=payed) {
             footer2.className = "notpayed";
