@@ -4,9 +4,9 @@
     <title>Collector</title>
     <meta charset = 'UTF-8'>
     <style>
-      h3 { color: darkred; margin-left: 5%; } 
+      h3 { color: darkred; margin-left: 5%; padding: 5px;} 
       table, th, td { border: 1px solid grey; text-align:center; }
-      table { margin-left: 5%; } 
+      table { margin-left: 5%; border-collapse: collapse; } 
       thead, tfoot { background-color: GainsBoro; }
       #add { margin-left: 5%; }
       #val { margin-top: 5px; margin-left: 5%; }
@@ -17,7 +17,7 @@
       .notattend { background: #fff; color: #000; }
       .attend { background: OliveDrab; color: #fff; }
       .notpayed { background: IndianRed; color: #fff; }
-      .payed { background: GainsBoro; color #000; }
+      .payed { background: GainsBoro; color: #000; }
       .button { width: 110px; }
       .txt { color: Grey; margin-left: 5%; font-size: 11px; font-weight: normal; } 
       .textBoxSmall { width: 30px; }
@@ -28,8 +28,7 @@
     <h3>Collector</h3>
     <div>
       <p id = 'tabinfo'></p>
-      
-    
+
       <input type = 'button' id = 'add' value = 'Add Person' onclick = 'addPerson()' class = 'button'/>
       <div id = 'adding' class = 'invisible'>
         <input type = 'text' id = 'add1'>
@@ -43,8 +42,7 @@
       </div>
                   
     </div>
-    
-    
+
     <div id = 'txt' class = 'invisible'>
       <h5 class = 'txt'>After page reload all changes will be lost. </br> To save them edit list in <span class = 'black'>'empl.js'</span> file </h5>
     </div>
@@ -63,7 +61,7 @@
   
 // Setting array people (THIS LIST 'temp' SHOULD BE EDITED MANUALY)   
 var temp = "First Person, Second Person, Third Person, Fourth Person, Fifth Person, Sixth Person, Seventh Person, Eight Person, Ninth Person, Tenth Person";
-var empl = new Array();
+var empl = [];
 empl = temp.split(',');
 
 // drawing table 
@@ -97,7 +95,7 @@ var tableFun = function () {
       // creating table body
       for (var y = 0; y < empl.length; y++) {
         var row = document.createElement('tr');
-        
+
         // Creates rows and a text nodes
         var firstCell = document.createTextNode(y+1+'.');
         var secondCell = document.createElement('DIV');
@@ -257,7 +255,6 @@ function minusPerson() {
   }
 };
   
-
   </script>
     
   </body>
